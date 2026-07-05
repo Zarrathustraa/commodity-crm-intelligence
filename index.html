@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AcreLink Pro - Intelligence-Driven Commodity CRM & Brokerage</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Configuration for customized theme -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            irisBlue: '#16B3A3',
+            irisBlueDeep: '#0f8c7f',
+            premiumGold: '#D4A359',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Tabler Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.25);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(156, 163, 175, 0.45);
+    }
+    .custom-shadow {
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    }
+    .dark .custom-shadow {
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="bg-[#FAF9F5] text-[#2B2A28] dark:bg-[#111110] dark:text-[#E2E1DF] font-sans transition-colors duration-200 min-h-screen flex flex-col antialiased">
+
+  <!-- Header -->
+  <header class="border-b border-[#E5E3DF] dark:border-[#2C2B29] bg-[#FAF9F5] dark:bg-[#111110] z-10">
+    <div class="max-w-[1600px] mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-irisBlue to-irisBlueDeep flex items-center justify-center text-white font-serif font-bold text-xl custom-shadow">
+          A
+        </div>
+        <div>
+          <h1 class="text-xl font-serif font-semibold tracking-wide flex items-center gap-2">
+            AcreLink Pro 
+            <span class="text-xs bg-[#E8724C]/10 text-[#E8724C] dark:bg-[#E8724C]/20 border border-[#E8724C]/20 rounded-full px-2 py-0.5 font-sans font-medium">BROKER HQ</span>
+          </h1>
+          <p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893] tracking-wider uppercase font-medium">Intelligent Agriculture CRM & Risk Matrix</p>
+        </div>
+      </div>
+
+      <!-- Ticker Ribbon Container -->
+      <div class="flex-1 max-w-4xl overflow-hidden px-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="ticker-ribbon">
+          <!-- Corn -->
+          <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('corn')">
+            <div>
+              <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT CORN (ZC)</p>
+              <span id="ticker-corn-price" class="text-sm font-semibold font-mono">Loading...</span>
+            </div>
+            <span id="ticker-corn-change" class="text-xs font-mono font-medium">--</span>
+          </div>
+          <!-- Soy -->
+          <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('soy')">
+            <div>
+              <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT SOY (ZS)</p>
+              <span id="ticker-soy-price" class="text-sm font-semibold font-mono">Loading...</span>
+            </div>
+            <span id="ticker-soy-change" class="text-xs font-mono font-medium">--</span>
+          </div>
+          <!-- Wheat -->
+          <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('wheat')">
+            <div>
+              <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT WHEAT (ZW)</p>
+              <span id="ticker-wheat-price" class="text-sm font-semibold font-mono">Loading...</span>
+            </div>
+            <span id="ticker-wheat-change" class="text-xs font-mono font-medium">--</span>
+          </div>
+          <!-- Matif -->
+          <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('matif')">
+            <div>
+              <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">MATIF WHEAT (EBM)</p>
+              <span id="ticker-matif-price" class="text-sm font-semibold font-mono">Loading...</span>
+            </div>
+            <span id="ticker-matif-change" class="text-xs font-mono font-medium">--</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Live Badge -->
+        <span class="flex items-center gap-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full text-xs font-medium tracking-wide">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          REAL-TIME ACTIVE
+        </span>
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="p-2 border border-[#E5E3DF] dark:border-[#2C2B29] bg-white dark:bg-[#1A1918] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] rounded-lg text-[#7E7C77] dark:text-[#9A9893]" aria-label="Toggle Dark Mode">
+          <i class="ti ti-sun dark:hidden text-lg"></i>
+          <i class="ti ti-moon hidden dark:block text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Workspace -->
+  <main class="flex-1 max-w-[1600px] w-full mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- Column 1: Risk & Vulnerability Matrix (4 Columns) -->
+    <section class="lg:col-span-4 flex flex-col gap-4">
+      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
+        <div class="flex justify-between items-start mb-4 border-b border-[#F2EFF9] dark:border-[#252422] pb-3">
+          <div>
+            <h2 class="font-serif text-lg font-semibold tracking-wide">Farm Risk Cockpit</h2>
+            <p class="text-xs text-[#7E7C77] dark:text-[#9A9893]">Outreach routing weighted by risk levels</p>
+          </div>
+          <span class="text-xs font-semibold bg-irisBlue/10 text-irisBlue px-2.5 py-1 rounded-full border border-irisBlue/20" id="client-count">5 Accounts</span>
+        </div>
+
+        <!-- Filter / Search Row -->
+        <div class="relative mb-4">
+          <i class="ti ti-search absolute left-3 top-2.5 text-[#7E7C77] dark:text-[#9A9893] text-base"></i>
+          <input type="text" id="client-search" placeholder="Search farmer, crop, region..." class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg pl-9 pr-4 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-irisBlue transition-all">
+        </div>
+
+        <!-- Client List Wrapper -->
+        <div class="space-y-3 max-h-[580px] overflow-y-auto pr-1" id="client-list">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Column 2: Historical Chart & Agronomic Intelligence (5 Columns) -->
+    <section class="lg:col-span-5 flex flex-col gap-6">
+      
+      <!-- Chart Card -->
+      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h2 class="font-serif text-lg font-semibold tracking-wide" id="chart-title">Market Trend</h2>
+            <p class="text-xs text-[#7E7C77] dark:text-[#9A9893]" id="chart-subtitle">Real-time Futures Price Feed (30-day History)</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs bg-irisBlue/10 text-irisBlue border border-irisBlue/20 px-2 py-0.5 rounded-md font-mono font-medium uppercase" id="selected-symbol-badge">ZC=F</span>
+          </div>
+        </div>
+
+        <!-- Chart Container -->
+        <div class="h-[240px] relative w-full mb-2">
+          <canvas id="market-chart"></canvas>
+        </div>
+        <div class="flex justify-between text-[11px] text-[#7E7C77] dark:text-[#9A9893] border-t border-[#F2EFF9] dark:border-[#252422] pt-2 font-mono">
+          <span>* Historical intervals sourced directly from Euronext & CME Group adapters</span>
+          <span id="chart-last-update">Updated: Just Now</span>
+        </div>
+      </div>
+
+      <!-- Live Agronomic Weather Station (Open-Meteo) -->
+      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
+        <div class="flex justify-between items-start mb-4 pb-3 border-b border-[#F2EFF9] dark:border-[#252422]">
+          <div>
+            <h2 class="font-serif text-lg font-semibold tracking-wide flex items-center gap-2">
+              <i class="ti ti-satellite text-irisBlue"></i> Farm Atmospheric Monitor
+            </h2>
+            <p class="text-xs text-[#7E7C77] dark:text-[#9A9893]">Live Satellite & Open-Meteo API agronomic coordinates</p>
+          </div>
+          <span class="text-[11px] font-mono bg-premiumGold/15 text-premiumGold px-2.5 py-0.5 rounded border border-premiumGold/25 flex items-center gap-1">
+            <i class="ti ti-route"></i> API ACTIVE
+          </span>
+        </div>
+
+        <!-- Map & Lat Long Details -->
+        <div class="flex justify-between items-center bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-3 mb-4">
+          <div>
+            <span class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest uppercase block font-semibold">Active Coordinates</span>
+            <strong class="text-xs font-mono font-bold tracking-wide" id="ag-coordinates">...</strong>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest uppercase block font-semibold">Location Region</span>
+            <span class="text-xs font-semibold" id="ag-region">...</span>
+          </div>
+        </div>
+
+        <!-- Agronomic 4-Grid Metrics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+          <!-- Temp -->
+          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
+            <i class="ti ti-temperature-celsius text-lg text-[#E8724C] mb-1"></i>
+            <span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Air Temp</span>
+            <span class="text-sm font-bold font-mono text-[#E8724C]" id="ag-temp">...</span>
+          </div>
+          <!-- RH -->
+          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
+            <i class="ti ti-droplet text-lg text-sky-500 mb-1"></i>
+            <span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Humidity</span>
+            <span class="text-sm font-bold font-mono text-sky-500" id="ag-humidity">...</span>
+          </div>
+          <!-- Soil Moisture -->
+          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
+            <i class="ti ti-seeding text-lg text-[#5FB84C] mb-1"></i>
+            <span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Soil moisture</span>
+            <span class="text-sm font-bold font-mono text-[#5FB84C]" id="ag-soil">...</span>
+          </div>
+          <!-- ET -->
+          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
+            <i class="ti ti-wind text-lg text-premiumGold mb-1"></i>
+            <span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Evapotrans.</span>
+            <span class="text-sm font-bold font-mono text-premiumGold" id="ag-et">...</span>
+          </div>
+        </div>
+
+        <!-- Weather Status Description Banner -->
+        <div class="border border-dashed border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-4 flex gap-3 items-center bg-[#FAF9F5]/30 dark:bg-[#1A1918]/30">
+          <div class="w-10 h-10 rounded-full bg-irisBlue/10 flex items-center justify-center text-irisBlue">
+            <i class="ti ti-info-circle text-lg"></i>
+          </div>
+          <div>
+            <strong class="text-xs block font-bold" id="weather-alert-title">Agronomic Risk Profile</strong>
+            <p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893]" id="weather-alert-desc">Select an account in the left cockpit to pull real-time weather alerts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Column 3: CRM Action & Outreach Center (3 Columns) -->
+    <section class="lg:col-span-3 flex flex-col gap-6">
+      
+      <!-- Outbound Advisory Box -->
+      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow">
+        <h2 class="font-serif text-lg font-semibold tracking-wide mb-2 flex items-center gap-1.5">
+          <i class="ti ti-send-2 text-irisBlue"></i> CRM Dispatch
+        </h2>
+        <p class="text-xs text-[#7E7C77] dark:text-[#9A9893] mb-4">Auto-compiles physical agronomics against CBOT live price curves</p>
+
+        <div class="relative mb-3">
+          <label class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest font-semibold block uppercase mb-1">Outbound Target</label>
+          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg px-3 py-1.5 flex items-center gap-2 text-xs">
+            <i class="ti ti-user-circle text-base text-irisBlue"></i>
+            <span class="font-semibold" id="outbound-farmer-name">...</span>
+          </div>
+        </div>
+
+        <div class="relative mb-4">
+          <label class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest font-semibold block uppercase mb-1">Email / SMS Advisory Template</label>
+          <textarea id="outreach-template" rows="7" class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-3 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-irisBlue leading-relaxed resize-none"></textarea>
+        </div>
+
+        <div class="flex gap-2">
+          <button onclick="dispatchProposal()" class="flex-1 bg-irisBlue hover:bg-irisBlueDeep text-white py-2.5 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all custom-shadow">
+            <i class="ti ti-mail-forward text-sm"></i> Dispatch Alert
+          </button>
+          <button onclick="copyAdvisory()" class="bg-[#FAF9F5] dark:bg-[#111110] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] text-[#2B2A28] dark:text-[#E2E1DF] border border-[#E5E3DF] dark:border-[#2C2B29] p-2.5 rounded-lg flex items-center justify-center transition-all" title="Copy Text">
+            <i class="ti ti-copy text-base"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Advisory Log Note Card -->
+      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
+        <h2 class="font-serif text-lg font-semibold tracking-wide mb-2 flex items-center gap-1.5">
+          <i class="ti ti-history text-irisBlue"></i> Action Logs
+        </h2>
+        <p class="text-xs text-[#7E7C77] dark:text-[#9A9893] mb-4">Keep audit notes of conversations & market execution logs</p>
+
+        <!-- Log notes output list -->
+        <div id="log-notes-list" class="space-y-2 mb-4 max-h-[160px] overflow-y-auto">
+          <!-- Injected dynamically per user -->
+        </div>
+
+        <div class="flex gap-1.5">
+          <input type="text" id="new-log-input" placeholder="Type interaction log..." class="flex-1 bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-irisBlue transition-all">
+          <button onclick="saveLog()" class="bg-[#FAF9F5] dark:bg-[#111110] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] border border-[#E5E3DF] dark:border-[#2C2B29] px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center text-irisBlue transition-all">
+            <i class="ti ti-plus"></i>
+          </button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Interactive Global Toast system -->
+  <div id="toast-notif" class="fixed bottom-6 right-6 bg-white dark:bg-[#1A1918] border border-emerald-500 rounded-xl p-4 shadow-2xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 z-50">
+    <div class="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+      <i class="ti ti-checks text-lg"></i>
+    </div>
+    <div>
+      <strong class="text-xs block font-bold text-[#2B2A28] dark:text-[#E2E1DF]">Action Dispatched</strong>
+      <p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893]" id="toast-message">Client notified via automated SMS gateways successfully.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-[#E5E3DF] dark:border-[#2C2B29] bg-[#FAF9F5] dark:bg-[#111110] py-6 text-center text-xs text-[#7E7C77] dark:text-[#9A9893]">
+    <div class="max-w-[1600px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p>&copy; 2026 AcreLink Inc. All proprietary agronomic indexes, CBOT & Euronext adapters are strictly secure.</p>
+      <div class="flex gap-4">
+        <a href="#" class="hover:text-irisBlue transition-colors">API Docs</a>
+        <a href="#" class="hover:text-irisBlue transition-colors">Broker Compliance</a>
+        <a href="#" class="hover:text-irisBlue transition-colors">Support Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App Main Business Logic & Interactivity scripts -->
+  <script>
+    // In-memory client database
+    const clients = [
+      {
+        id: "c1",
+        name: "Marcus Miller",
+        farm: "Miller Farms LLC",
+        crop: "corn",
+        symbol: "ZC=F",
+        location: "Champaign, Illinois, USA",
+        exposure: "150,000 Bushels",
+        hedgeRatio: "45",
+        lat: 40.1164,
+        lon: -88.2434,
+        status: "danger",
+        statusText: "⚠️ Soil Deficit",
+        logs: ["Spoke to Marcus; concerned with weather forecast.", "Created 45% crop protection collar order."]
+      },
+      {
+        id: "c2",
+        name: "Jean-Pierre Laurent",
+        farm: "Gaec Laurent Frères",
+        crop: "matif",
+        symbol: "EBM.PA",
+        location: "Orléans, France",
+        exposure: "2,500 Metric Tons",
+        hedgeRatio: "20",
+        lat: 47.9030,
+        lon: 1.9083,
+        status: "danger",
+        statusText: "🚨 Extreme Dryness",
+        logs: ["Emailed Paris exchange re: MATIF margins.", "Farmer looking to hedge an extra 30% crop."]
+      },
+      {
+        id: "c3",
+        name: "Eduardo Silva",
+        farm: "Fazenda da Serra",
+        crop: "soy",
+        symbol: "ZS=F",
+        location: "Mato Grosso, Brazil",
+        exposure: "340,000 Bushels",
+        hedgeRatio: "35",
+        lat: -12.6811,
+        lon: -55.6560,
+        status: "warning",
+        statusText: "⚡ Moderate Temp",
+        logs: ["Mato Grosso NDVI is trending slightly below norm."]
+      },
+      {
+        id: "c4",
+        name: "Sara O'Connor",
+        farm: "O'Connor Agronomics",
+        crop: "soy",
+        symbol: "ZS=F",
+        location: "Des Moines, Iowa, USA",
+        exposure: "80,000 Bushels",
+        hedgeRatio: "75",
+        lat: 41.5868,
+        lon: -93.6250,
+        status: "success",
+        statusText: "✅ Optimal Profile",
+        logs: ["Iowa crops are secure. No hedge changes recommended."]
+      },
+      {
+        id: "c5",
+        name: "Lachlan Jones",
+        farm: "Jones Pastoral Co.",
+        crop: "wheat",
+        symbol: "ZW=F",
+        location: "Moree, NSW, Australia",
+        exposure: "4,200 Metric Tons",
+        hedgeRatio: "15",
+        lat: -29.4635,
+        lon: 149.8415,
+        status: "danger",
+        statusText: "🚨 Under-Hedged",
+        logs: ["Severe El Nino alert discussed with Lachlan."]
+      }
+    ];
+
+    let activeClientId = "c1";
+    let activeCommodity = "corn";
+    let liveMarketData = {};
+    let chartInstance = null;
+
+    // Theme Management
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      updateChartColors();
+    });
+
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Load Live Market Pricing & Chart
+    async function loadMarketData() {
+      try {
+        // Fetch from Vercel Serverless Function relative API endpoint
+        const response = await fetch('/api/prices');
+        const json = await response.json();
+        
+        if (json.success && json.data) {
+          liveMarketData = json.data;
+          renderTickers();
+          renderChart();
+          // Update weather variables for current active client
+          const client = clients.find(c => c.id === activeClientId);
+          if (client) {
+            updateAdvisoryTemplate(client);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load live APIs. Serving embedded simulation layer.", error);
+        // Fallback to local simulated stream
+        loadSimulatedData();
+      }
+    }
+
+    function loadSimulatedData() {
+      const now = Math.floor(Date.now() / 1000);
+      const oneDay = 86400;
+      
+      const generateHistory = (startPrice, volatility) => {
+        const history = [];
+        let current = startPrice;
+        for (let i = 30; i >= 0; i--) {
+          current += (Math.random() - 0.48) * volatility;
+          history.push({
+            time: now - (i * oneDay),
+            price: parseFloat(current.toFixed(2))
+          });
+        }
+        return history;
+      };
+
+      liveMarketData = {
+        corn: {
+          symbol: "ZC=F",
+          currentPrice: 440.75,
+          change: 2.25,
+          changePercent: 0.51,
+          currency: "USD",
+          history: generateHistory(440.75, 2)
+        },
+        soy: {
+          symbol: "ZS=F",
+          currentPrice: 1146.50,
+          change: 7.50,
+          changePercent: 0.66,
+          currency: "USD",
+          history: generateHistory(1146.50, 6)
+        },
+        wheat: {
+          symbol: "ZW=F",
+          currentPrice: 600.25,
+          change: 2.25,
+          changePercent: 0.38,
+          currency: "USD",
+          history: generateHistory(600.25, 4)
+        },
+        matif: {
+          symbol: "EBM.PA",
+          currentPrice: 190.25,
+          change: -1.90,
+          changePercent: -0.98,
+          currency: "EUR",
+          history: generateHistory(190.25, 1.5)
+        }
+      };
+      
+      renderTickers();
+      renderChart();
+    }
+
+    function renderTickers() {
+      for (const [key, details] of Object.entries(liveMarketData)) {
+        const priceEl = document.getElementById(`ticker-${key}-price`);
+        const changeEl = document.getElementById(`ticker-${key}-change`);
+        
+        if (priceEl && changeEl) {
+          priceEl.innerText = details.currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2});
+          
+          const isUp = details.change >= 0;
+          changeEl.innerText = `${isUp ? '▲ +' : '▼ '}${details.changePercent.toFixed(2)}%`;
+          changeEl.className = `text-xs font-mono font-semibold ${isUp ? 'text-emerald-500' : 'text-rose-500'}`;
+        }
+      }
+    }
+
+    // Select commodity directly from header ribbon
+    function selectCommodity(key) {
+      activeCommodity = key;
+      renderChart();
+    }
+
+    // Update active client details
+    async function selectClient(clientId) {
+      activeClientId = clientId;
+      const client = clients.find(c => c.id === clientId);
+      if (!client) return;
+
+      activeCommodity = client.crop;
+      
+      // Update sidebar UI selection
+      document.querySelectorAll('.client-card-item').forEach(el => {
+        el.classList.remove('border-irisBlue', 'bg-irisBlue/[0.02]', 'ring-1', 'ring-irisBlue');
+      });
+      const selectedCard = document.getElementById(`card-${clientId}`);
+      if (selectedCard) {
+        selectedCard.classList.add('border-irisBlue', 'bg-irisBlue/[0.02]', 'ring-1', 'ring-irisBlue');
+      }
+
+      // Load Agronomic weather variables (Live API Call!)
+      await fetchAgronomics(client);
+      
+      // Load action log notes
+      renderLogNotes(client);
+      
+      // Update chart title & selected symbol highlight
+      renderChart();
+    }
+
+    // Real-time Open-Meteo Integration
+    async function fetchAgronomics(client) {
+      document.getElementById('ag-coordinates').innerText = `${client.lat.toFixed(4)}° N, ${client.lon.toFixed(4)}° W`;
+      document.getElementById('ag-region').innerText = client.location.split(',')[0];
+      
+      document.getElementById('ag-temp').innerText = "...";
+      document.getElementById('ag-humidity').innerText = "...";
+      document.getElementById('ag-soil').innerText = "...";
+      document.getElementById('ag-et').innerText = "...";
+
+      try {
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${client.lat}&longitude=${client.lon}&hourly=temperature_2m,relative_humidity_2m,soil_moisture_0_to_10cm,evapotranspiration&forecast_days=1`);
+        if (!response.ok) throw new Error("Failed to reach meteo endpoints");
+        
+        const data = await response.json();
+        const hourly = data.hourly;
+        
+        const temp = hourly.temperature_2m[0];
+        const humidity = hourly.relative_humidity_2m[0];
+        const soilMoisture = hourly.soil_moisture_0_to_10cm[0];
+        const evapotranspiration = hourly.evapotranspiration[0] || 0.0;
+        
+        document.getElementById('ag-temp').innerText = `${temp.toFixed(1)} °C`;
+        document.getElementById('ag-humidity').innerText = `${humidity}%`;
+        document.getElementById('ag-soil').innerText = `${soilMoisture.toFixed(3)} m³/m³`;
+        document.getElementById('ag-et').innerText = `${evapotranspiration.toFixed(2)} mm`;
+
+        // Update weather alert banner contextual analysis
+        const alertTitle = document.getElementById('weather-alert-title');
+        const alertDesc = document.getElementById('weather-alert-desc');
+        
+        if (client.status === 'danger') {
+          alertTitle.className = "text-xs block font-bold text-[#E8724C]";
+          alertTitle.innerText = `High Agronomic Hazard Level Detected`;
+          alertDesc.innerText = `Critically low soil moisture profile verified at ${soilMoisture.toFixed(3)} m³/m³ combined with dry local wind vectors. Advisory dispatch is highly recommended.`;
+        } else if (client.status === 'warning') {
+          alertTitle.className = "text-xs block font-bold text-premiumGold";
+          alertTitle.innerText = `Moderate Stress Threshold Triggered`;
+          alertDesc.innerText = `Elevated evapotranspiration indexes of ${evapotranspiration.toFixed(2)} mm tracking at active farm polygon. Watch the upcoming weekly crop progress estimates.`;
+        } else {
+          alertTitle.className = "text-xs block font-bold text-emerald-500";
+          alertTitle.innerText = `Favorable Field Conditions`;
+          alertDesc.innerText = `All atmospheric variables are currently optimal. Soil moisture saturation levels at ${soilMoisture.toFixed(3)} m³/m³ are safely holding local yield expectations.`;
+        }
+
+        // Generate customized broker advisory dispatch template
+        updateAdvisoryTemplate(client, temp, soilMoisture);
+
+      } catch (error) {
+        console.error("Agronomic API connection failed. Reaching for local simulation fallback.", error);
+        // Fallback simulated metrics
+        const isDanger = client.status === 'danger';
+        const isWarning = client.status === 'warning';
+        
+        const fTemp = isDanger ? 34.5 : (isWarning ? 29.8 : 22.1);
+        const fHum = isDanger ? 31 : (isWarning ? 45 : 68);
+        const fSoil = isDanger ? 0.114 : (isWarning ? 0.165 : 0.285);
+        const fEt = isDanger ? 5.2 : (isWarning ? 3.8 : 1.2);
+        
+        document.getElementById('ag-temp').innerText = `${fTemp} °C`;
+        document.getElementById('ag-humidity').innerText = `${fHum}%`;
+        document.getElementById('ag-soil').innerText = `${fSoil} m³/m³`;
+        document.getElementById('ag-et').innerText = `${fEt} mm`;
+        
+        updateAdvisoryTemplate(client, fTemp, fSoil);
+      }
+    }
+
+    // Dynamic advisory copy generator
+    function updateAdvisoryTemplate(client, temp = 30.5, soilMoisture = 0.125) {
+      const commodityData = liveMarketData[client.crop] || { currentPrice: 0.0, symbol: "" };
+      const currentPrice = commodityData.currentPrice;
+      const outboundName = document.getElementById('outbound-farmer-name');
+      const outreachArea = document.getElementById('outreach-template');
+      
+      outboundName.innerText = `${client.name} (${client.farm})`;
+      
+      let message = `Subject: URGENT HEDGE STRATEGY ADVISORY: ${client.farm}
+
+`;
+      message += `Dear ${client.name.split(' ')[0]},
+
+`;
+      message += `This is your dispatch advisor from AcreLink Pro. We are monitoring real-time weather and market fluctuations across your fields:
+
+`;
+      message += `• Farm Location: ${client.location}
+`;
+      message += `• Soil Moisture Profile: ${soilMoisture.toFixed(3)} m³/m³
+`;
+      message += `• Active Surface Air Temp: ${temp.toFixed(1)}°C
+`;
+      message += `• Current Market Price: ${commodityData.symbol} is currently quoting at ${currentPrice.toLocaleString()} ${commodityData.currency || 'USD'}
+
+`;
+      
+      if (client.status === 'danger') {
+        message += `WARNING: Severe weather index stresses have breached critical parameters at silking stage. With your physical crop exposure of ${client.exposure} only ${client.hedgeRatio}% hedged, you face extreme downside market vulnerability.
+
+`;
+        message += `STRATEGY ACTION REQUIRED: We highly recommend scaling in an additional 25% hedge ratio via current put options contracts to insulate margins.`;
+      } else if (client.status === 'warning') {
+        message += `NOTICE: Climatic changes represent rising soil evapotranspiration limits. You currently hold a ${client.hedgeRatio}% protected position on ${client.exposure}.
+
+`;
+        message += `STRATEGY ACTION: Allocate standard forward cash protection pricing models on any upcoming price rallies.`;
+      } else {
+        message += `Your agronomic profile looks stable and healthy across our satellite matrices. Your current ${client.hedgeRatio}% portfolio hedge completely shields your crop.
+
+`;
+        message += `ACTION: Stand pat and let remaining crop exposure leverage cash market spot premiums later in the season.`;
+      }
+      
+      outreachArea.value = message;
+    }
+
+    // Chart.js Configuration
+    function renderChart() {
+      const commData = liveMarketData[activeCommodity];
+      if (!commData) return;
+
+      const history = commData.history || [];
+      const labels = history.map(h => {
+        const d = new Date(h.time * 1000);
+        return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric'});
+      });
+      const prices = history.map(h => h.price);
+
+      // Update badge elements
+      document.getElementById('selected-symbol-badge').innerText = commData.symbol;
+      document.getElementById('chart-title').innerText = `${activeCommodity.toUpperCase()} FUTURES TREND`;
+      document.getElementById('chart-subtitle').innerText = `30-Day Historical Trend for contract: ${commData.symbol}`;
+
+      const isDark = document.documentElement.classList.contains('dark');
+      const gridColor = isDark ? '#2C2B29' : '#E5E3DF';
+      const textColor = isDark ? '#9A9893' : '#7E7C77';
+
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      const ctx = document.getElementById('market-chart').getContext('2d');
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: `${commData.symbol} Price`,
+            data: prices,
+            borderColor: '#16B3A3',
+            borderWidth: 2,
+            pointRadius: 1,
+            pointHoverRadius: 4,
+            backgroundColor: 'rgba(22, 179, 163, 0.04)',
+            fill: true,
+            tension: 0.15
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              backgroundColor: isDark ? '#1A1918' : '#FFFFFF',
+              titleColor: isDark ? '#E2E1DF' : '#2B2A28',
+              bodyColor: isDark ? '#E2E1DF' : '#2B2A28',
+              borderColor: '#16B3A3',
+              borderWidth: 0.5
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: gridColor },
+              ticks: { color: textColor, font: { size: 9, family: 'Inter' } }
+            },
+            y: {
+              grid: { color: gridColor },
+              ticks: { color: textColor, font: { size: 9, family: 'Inter' } }
+            }
+          }
+        }
+      });
+    }
+
+    function updateChartColors() {
+      if (chartInstance) {
+        const isDark = document.documentElement.classList.contains('dark');
+        chartInstance.options.scales.x.grid.color = isDark ? '#2C2B29' : '#E5E3DF';
+        chartInstance.options.scales.y.grid.color = isDark ? '#2C2B29' : '#E5E3DF';
+        chartInstance.options.scales.x.ticks.color = isDark ? '#9A9893' : '#7E7C77';
+        chartInstance.options.scales.y.ticks.color = isDark ? '#9A9893' : '#7E7C77';
+        chartInstance.update();
+      }
+    }
+
+    // Client Sidebar Render & Search
+    function renderClientList(filter = "") {
+      const container = document.getElementById('client-list');
+      container.innerHTML = "";
+
+      const filtered = clients.filter(c => {
+        return c.name.toLowerCase().includes(filter.toLowerCase()) ||
+               c.farm.toLowerCase().includes(filter.toLowerCase()) ||
+               c.crop.toLowerCase().includes(filter.toLowerCase()) ||
+               c.location.toLowerCase().includes(filter.toLowerCase());
+      });
+
+      document.getElementById('client-count').innerText = `${filtered.length} Accounts`;
+
+      filtered.forEach(client => {
+        const card = document.createElement('div');
+        card.id = `card-${client.id}`;
+        card.className = `client-card-item bg-[#FAF9F5]/40 dark:bg-[#111110]/40 border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-4 cursor-pointer transition-all hover:border-irisBlue flex flex-col gap-2 ${client.id === activeClientId ? 'border-irisBlue bg-irisBlue/[0.02] ring-1 ring-irisBlue' : ''}`;
+        card.onclick = () => selectClient(client.id);
+
+        let badgeClass = "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20";
+        if (client.status === 'danger') {
+          badgeClass = "bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20";
+        } else if (client.status === 'warning') {
+          badgeClass = "bg-[#D4A359]/10 text-[#D4A359] border border-[#D4A359]/25";
+        }
+
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <strong class="text-xs font-semibold block hover:text-irisBlue transition-colors">${client.name}</strong>
+              <span class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-medium">${client.farm} • ${client.location.split(',')[0]}</span>
+            </div>
+            <span class="text-[10px] font-medium tracking-wide uppercase px-2 py-0.5 rounded-full ${badgeClass}">${client.statusText}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 mt-1 pt-2 border-t border-[#FAF9F5] dark:border-[#111110]">
+            <div>
+              <span class="text-[9px] text-[#7E7C77] dark:text-[#9A9893] block uppercase tracking-wide">Exposure</span>
+              <span class="text-xs font-semibold font-mono">${client.exposure}</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[9px] text-[#7E7C77] dark:text-[#9A9893] block uppercase tracking-wide">Hedged Ratio</span>
+              <span class="text-xs font-semibold font-mono text-irisBlue">${client.hedgeRatio}%</span>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById('client-search').addEventListener('input', (e) => {
+      renderClientList(e.target.value);
+    });
+
+    // Logging Note Actions
+    function renderLogNotes(client) {
+      const container = document.getElementById('log-notes-list');
+      container.innerHTML = "";
+      
+      const logs = client.logs || [];
+      if (logs.length === 0) {
+        container.innerHTML = `<div class="text-xs text-[#7E7C77] dark:text-[#9A9893] italic">No transaction audit notes recorded.</div>`;
+        return;
+      }
+
+      logs.forEach(log => {
+        const logItem = document.createElement('div');
+        logItem.className = "bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 text-[11px] font-mono leading-relaxed";
+        logItem.innerText = `• ${log}`;
+        container.appendChild(logItem);
+      });
+    }
+
+    function saveLog() {
+      const input = document.getElementById('new-log-input');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const client = clients.find(c => c.id === activeClientId);
+      if (client) {
+        client.logs = client.logs || [];
+        client.logs.unshift(val);
+        renderLogNotes(client);
+        input.value = "";
+        
+        // Push small visual confirmation
+        showToast("Action log audit updated successfully.");
+      }
+    }
+
+    // Copy to clipboard
+    function copyAdvisory() {
+      const textarea = document.getElementById('outreach-template');
+      textarea.select();
+      document.execCommand('copy');
+      showToast("Advisory template copied to clipboard!");
+    }
+
+    // Mock dispatch outreach action
+    function dispatchProposal() {
+      const client = clients.find(c => c.id === activeClientId);
+      showToast(`Outbound email & SMS warnings dispatched to ${client.name}!`);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast-notif');
+      document.getElementById('toast-message').innerText = message;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3500);
+    }
+
+    // Main Init
+    window.onload = async () => {
+      renderClientList();
+      await loadMarketData();
+      await selectClient("c1");
+      
+      // Real-time market interval sync
+      setInterval(async () => {
+        await loadMarketData();
+        document.getElementById('chart-last-update').innerText = `Updated: ${new Date().toLocaleTimeString()}`;
+      }, 15000);
+    };
+  </script>
+</body>
+</html>
