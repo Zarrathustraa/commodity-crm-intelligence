@@ -1,15 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AcreLink Pro - Intelligence-Driven Commodity CRM & Brokerage</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Tailwind Configuration for customized theme -->
-  <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AcreLink Pro - Intelligence-Driven Commodity CRM &amp; Brokerage</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Tailwind Configuration for customized theme -->
+<script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
@@ -27,13 +26,12 @@
       }
     }
   </script>
-
-  <!-- Google Fonts & Tabler Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <style>
+<!-- Google Fonts & Tabler Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet"/>
+<style>
     /* Chatbot Custom Styles */
     #chatbot-messages::-webkit-scrollbar {
       width: 4px;
@@ -49,12 +47,9 @@
       background: #2C2B29;
     }
   </style>
-
-
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
@@ -79,277 +74,251 @@
   </style>
 </head>
 <body class="bg-[#FAF9F5] text-[#2B2A28] dark:bg-[#111110] dark:text-[#E2E1DF] font-sans transition-colors duration-200 min-h-screen flex flex-col antialiased">
-
-  <!-- Header -->
-  <header class="border-b border-[#E5E3DF] dark:border-[#2C2B29] bg-[#FAF9F5] dark:bg-[#111110] z-10">
-    <div class="max-w-[1600px] mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-irisBlue to-irisBlueDeep flex items-center justify-center text-white font-serif font-bold text-xl custom-shadow">
+<!-- Header -->
+<header class="border-b border-[#E5E3DF] dark:border-[#2C2B29] bg-[#FAF9F5] dark:bg-[#111110] z-10">
+<div class="max-w-[1600px] mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-irisBlue to-irisBlueDeep flex items-center justify-center text-white font-serif font-bold text-xl custom-shadow">
           A
         </div>
-        <div>
-          <h1 class="text-xl font-serif font-semibold tracking-wide flex items-center gap-2">
+<div>
+<h1 class="text-xl font-serif font-semibold tracking-wide flex items-center gap-2">
             AcreLink Pro 
             <span class="text-xs bg-[#E8724C]/10 text-[#E8724C] dark:bg-[#E8724C]/20 border border-[#E8724C]/20 rounded-full px-2 py-0.5 font-sans font-medium">BROKER HQ</span>
-          </h1>
-          <p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893] tracking-wider uppercase font-medium">Intelligent Agriculture CRM & Risk Matrix</p>
-        </div>
-      </div>
-
-      <!-- Ticker Ribbon Container -->
-      <div class="flex-1 max-w-4xl overflow-hidden px-4">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="ticker-ribbon">
-          <!-- Corn -->
-          <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('corn')">
-            <div>
-              <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT CORN (ZC)</p>
-              <span id="ticker-corn-price" class="text-sm font-semibold font-mono">Loading...</span>
-            </div>
-            <span id="ticker-corn-change" class="text-xs font-mono font-medium">--</span>
-          </div>
-          <!-- Soy -->
-          <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('soy')">
-            <div>
-              <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT SOY (ZS)</p>
-              <span id="ticker-soy-price" class="text-sm font-semibold font-mono">Loading...</span>
-            </div>
-            <span id="ticker-soy-change" class="text-xs font-mono font-medium">--</span>
-          </div>
-          <!-- Wheat -->
-          <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('wheat')">
-            <div>
-              <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT WHEAT (ZW)</p>
-              <span id="ticker-wheat-price" class="text-sm font-semibold font-mono">Loading...</span>
-            </div>
-            <span id="ticker-wheat-change" class="text-xs font-mono font-medium">--</span>
-          </div>
-          <!-- Matif -->
-          <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('matif')">
-            <div>
-              <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">MATIF WHEAT (EBM)</p>
-              <span id="ticker-matif-price" class="text-sm font-semibold font-mono">Loading...</span>
-            </div>
-            <span id="ticker-matif-change" class="text-xs font-mono font-medium">--</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Controls -->
-      <div class="flex items-center gap-3">
-        <!-- Live Badge -->
-        <span class="flex items-center gap-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full text-xs font-medium tracking-wide">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+</h1>
+<p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893] tracking-wider uppercase font-medium">Intelligent Agriculture CRM &amp; Risk Matrix</p>
+</div>
+</div>
+<!-- Ticker Ribbon Container -->
+<div class="flex-1 max-w-4xl overflow-hidden px-4">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="ticker-ribbon">
+<!-- Corn -->
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('corn')">
+<div>
+<p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT CORN (ZC)</p>
+<span class="text-sm font-semibold font-mono" id="ticker-corn-price">Loading...</span>
+</div>
+<span class="text-xs font-mono font-medium" id="ticker-corn-change">--</span>
+</div>
+<!-- Soy -->
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('soy')">
+<div>
+<p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT SOY (ZS)</p>
+<span class="text-sm font-semibold font-mono" id="ticker-soy-price">Loading...</span>
+</div>
+<span class="text-xs font-mono font-medium" id="ticker-soy-change">--</span>
+</div>
+<!-- Wheat -->
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('wheat')">
+<div>
+<p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">CBOT WHEAT (ZW)</p>
+<span class="text-sm font-semibold font-mono" id="ticker-wheat-price">Loading...</span>
+</div>
+<span class="text-xs font-mono font-medium" id="ticker-wheat-change">--</span>
+</div>
+<!-- Matif -->
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-2 flex justify-between items-center cursor-pointer hover:border-irisBlue transition-all" onclick="selectCommodity('matif')">
+<div>
+<p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">MATIF WHEAT (EBM)</p>
+<span class="text-sm font-semibold font-mono" id="ticker-matif-price">Loading...</span>
+</div>
+<span class="text-xs font-mono font-medium" id="ticker-matif-change">--</span>
+</div>
+</div>
+</div>
+<!-- Controls -->
+<div class="flex items-center gap-3">
+<!-- Live Badge -->
+<span class="flex items-center gap-1.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full text-xs font-medium tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
           REAL-TIME ACTIVE
         </span>
-        <!-- Theme Toggle -->
-        <button id="theme-toggle" class="p-2 border border-[#E5E3DF] dark:border-[#2C2B29] bg-white dark:bg-[#1A1918] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] rounded-lg text-[#7E7C77] dark:text-[#9A9893]" aria-label="Toggle Dark Mode">
-          <i class="ti ti-sun dark:hidden text-lg"></i>
-          <i class="ti ti-moon hidden dark:block text-lg"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Dashboard Workspace -->
-  <main class="flex-1 max-w-[1600px] w-full mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-    <!-- Column 1: Risk & Vulnerability Matrix (4 Columns) -->
-    <section class="lg:col-span-4 flex flex-col gap-4">
-      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
-        <div class="flex justify-between items-start mb-4 border-b border-[#F2EFF9] dark:border-[#252422] pb-3">
-          <div>
-            <h2 class="font-serif text-lg font-semibold tracking-wide">Farm Risk Cockpit</h2>
-            <p class="text-xs text-[#7E7C77] dark:text-[#9A9893]">Outreach routing weighted by risk levels</p>
-          </div>
-          <span class="text-xs font-semibold bg-irisBlue/10 text-irisBlue px-2.5 py-1 rounded-full border border-irisBlue/20" id="client-count">5 Accounts</span>
-        </div>
-
-        <!-- Filter / Search Row -->
-        <div class="relative mb-4">
-          <i class="ti ti-search absolute left-3 top-2.5 text-[#7E7C77] dark:text-[#9A9893] text-base"></i>
-          <input type="text" id="client-search" placeholder="Search farmer, crop, region..." class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg pl-9 pr-4 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-irisBlue transition-all">
-        </div>
-
-        <!-- Client List Wrapper -->
-        <div class="space-y-3 max-h-[580px] overflow-y-auto pr-1" id="client-list">
-          <!-- Injected via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Column 2: Historical Chart & Agronomic Intelligence (5 Columns) -->
-    <section class="lg:col-span-5 flex flex-col gap-6">
-      
-      <!-- Chart Card -->
-      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow">
-        <div class="flex justify-between items-center mb-4">
-          <div>
-            <h2 class="font-serif text-lg font-semibold tracking-wide" id="chart-title">Market Trend</h2>
-            <p class="text-xs text-[#7E7C77] dark:text-[#9A9893]" id="chart-subtitle">Real-time Futures Price Feed (30-day History)</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="text-xs bg-irisBlue/10 text-irisBlue border border-irisBlue/20 px-2 py-0.5 rounded-md font-mono font-medium uppercase" id="selected-symbol-badge">ZC=F</span>
-          </div>
-        </div>
-
-        <!-- Chart Container -->
-        <div class="h-[240px] relative w-full mb-2">
-          <canvas id="market-chart"></canvas>
-        </div>
-        <div class="flex justify-between text-[11px] text-[#7E7C77] dark:text-[#9A9893] border-t border-[#F2EFF9] dark:border-[#252422] pt-2 font-mono">
-          <span>* Historical intervals sourced directly from Euronext & CME Group adapters</span>
-          <span id="chart-last-update">Updated: Just Now</span>
-        </div>
-      </div>
-
-      <!-- Live Agronomic Weather Station (Open-Meteo) -->
-      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
-        <div class="flex justify-between items-start mb-4 pb-3 border-b border-[#F2EFF9] dark:border-[#252422]">
-          <div>
-            <h2 class="font-serif text-lg font-semibold tracking-wide flex items-center gap-2">
-              <i class="ti ti-satellite text-irisBlue"></i> Farm Atmospheric Monitor
+<!-- Theme Toggle -->
+<button aria-label="Toggle Dark Mode" class="p-2 border border-[#E5E3DF] dark:border-[#2C2B29] bg-white dark:bg-[#1A1918] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] rounded-lg text-[#7E7C77] dark:text-[#9A9893]" id="theme-toggle">
+<i class="ti ti-sun dark:hidden text-lg"></i>
+<i class="ti ti-moon hidden dark:block text-lg"></i>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Dashboard Workspace -->
+<main class="flex-1 max-w-[1600px] w-full mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Column 1: Risk & Vulnerability Matrix (4 Columns) -->
+<section class="lg:col-span-4 flex flex-col gap-4">
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
+<div class="flex justify-between items-start mb-4 border-b border-[#F2EFF9] dark:border-[#252422] pb-3">
+<div>
+<h2 class="font-serif text-lg font-semibold tracking-wide">Farm Risk Cockpit</h2>
+<p class="text-xs text-[#7E7C77] dark:text-[#9A9893]">Outreach routing weighted by risk levels</p>
+</div>
+<span class="text-xs font-semibold bg-irisBlue/10 text-irisBlue px-2.5 py-1 rounded-full border border-irisBlue/20" id="client-count">5 Accounts</span>
+</div>
+<!-- Filter / Search Row -->
+<div class="relative mb-4">
+<i class="ti ti-search absolute left-3 top-2.5 text-[#7E7C77] dark:text-[#9A9893] text-base"></i>
+<input class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg pl-9 pr-4 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-irisBlue transition-all" id="client-search" placeholder="Search farmer, crop, region..." type="text"/>
+</div>
+<!-- Client List Wrapper -->
+<div class="space-y-3 max-h-[580px] overflow-y-auto pr-1" id="client-list">
+<!-- Injected via JS -->
+</div>
+</div>
+</section>
+<!-- Column 2: Historical Chart & Agronomic Intelligence (5 Columns) -->
+<section class="lg:col-span-5 flex flex-col gap-6">
+<!-- Chart Card -->
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow">
+<div class="flex justify-between items-center mb-4">
+<div>
+<h2 class="font-serif text-lg font-semibold tracking-wide" id="chart-title">Market Trend</h2>
+<p class="text-xs text-[#7E7C77] dark:text-[#9A9893]" id="chart-subtitle">Real-time Futures Price Feed (30-day History)</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs bg-irisBlue/10 text-irisBlue border border-irisBlue/20 px-2 py-0.5 rounded-md font-mono font-medium uppercase" id="selected-symbol-badge">ZC=F</span>
+</div>
+</div>
+<!-- Chart Container -->
+<div class="h-[240px] relative w-full mb-2">
+<canvas id="market-chart"></canvas>
+</div>
+<div class="flex justify-between text-[11px] text-[#7E7C77] dark:text-[#9A9893] border-t border-[#F2EFF9] dark:border-[#252422] pt-2 font-mono">
+<span>* Historical intervals sourced directly from Euronext &amp; CME Group adapters</span>
+<span id="chart-last-update">Updated: Just Now</span>
+</div>
+</div>
+<!-- Live Agronomic Weather Station (Open-Meteo) -->
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
+<div class="flex justify-between items-start mb-4 pb-3 border-b border-[#F2EFF9] dark:border-[#252422]">
+<div>
+<h2 class="font-serif text-lg font-semibold tracking-wide flex items-center gap-2">
+<i class="ti ti-satellite text-irisBlue"></i> Farm Atmospheric Monitor
             </h2>
-            <p class="text-xs text-[#7E7C77] dark:text-[#9A9893]">Live Satellite & Open-Meteo API agronomic coordinates</p>
-          </div>
-          <span class="text-[11px] font-mono bg-premiumGold/15 text-premiumGold px-2.5 py-0.5 rounded border border-premiumGold/25 flex items-center gap-1">
-            <i class="ti ti-route"></i> API ACTIVE
+<p class="text-xs text-[#7E7C77] dark:text-[#9A9893]">Live Satellite &amp; Open-Meteo API agronomic coordinates</p>
+</div>
+<span class="text-[11px] font-mono bg-premiumGold/15 text-premiumGold px-2.5 py-0.5 rounded border border-premiumGold/25 flex items-center gap-1">
+<i class="ti ti-route"></i> API ACTIVE
           </span>
-        </div>
-
-        <!-- Map & Lat Long Details -->
-        <div class="flex justify-between items-center bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-3 mb-4">
-          <div>
-            <span class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest uppercase block font-semibold">Active Coordinates</span>
-            <strong class="text-xs font-mono font-bold tracking-wide" id="ag-coordinates">...</strong>
-          </div>
-          <div class="text-right">
-            <span class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest uppercase block font-semibold">Location Region</span>
-            <span class="text-xs font-semibold" id="ag-region">...</span>
-          </div>
-        </div>
-
-        <!-- Agronomic 4-Grid Metrics -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-          <!-- Temp -->
-          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
-            <i class="ti ti-temperature-celsius text-lg text-[#E8724C] mb-1"></i>
-            <span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Air Temp</span>
-            <span class="text-sm font-bold font-mono text-[#E8724C]" id="ag-temp">...</span>
-          </div>
-          <!-- RH -->
-          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
-            <i class="ti ti-droplet text-lg text-sky-500 mb-1"></i>
-            <span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Humidity</span>
-            <span class="text-sm font-bold font-mono text-sky-500" id="ag-humidity">...</span>
-          </div>
-          <!-- Soil Moisture -->
-          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
-            <i class="ti ti-seeding text-lg text-[#5FB84C] mb-1"></i>
-            <span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Soil moisture</span>
-            <span class="text-sm font-bold font-mono text-[#5FB84C]" id="ag-soil">...</span>
-          </div>
-          <!-- ET -->
-          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
-            <i class="ti ti-wind text-lg text-premiumGold mb-1"></i>
-            <span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Evapotrans.</span>
-            <span class="text-sm font-bold font-mono text-premiumGold" id="ag-et">...</span>
-          </div>
-        </div>
-
-        <!-- Weather Status Description Banner -->
-        <div class="border border-dashed border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-4 flex gap-3 items-center bg-[#FAF9F5]/30 dark:bg-[#1A1918]/30">
-          <div class="w-10 h-10 rounded-full bg-irisBlue/10 flex items-center justify-center text-irisBlue">
-            <i class="ti ti-info-circle text-lg"></i>
-          </div>
-          <div>
-            <strong class="text-xs block font-bold" id="weather-alert-title">Agronomic Risk Profile</strong>
-            <p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893]" id="weather-alert-desc">Select an account in the left cockpit to pull real-time weather alerts.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Column 3: CRM Action & Outreach Center (3 Columns) -->
-    <section class="lg:col-span-3 flex flex-col gap-6">
-      
-      <!-- Outbound Advisory Box -->
-      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow">
-        <h2 class="font-serif text-lg font-semibold tracking-wide mb-2 flex items-center gap-1.5">
-          <i class="ti ti-send-2 text-irisBlue"></i> CRM Dispatch
+</div>
+<!-- Map & Lat Long Details -->
+<div class="flex justify-between items-center bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-3 mb-4">
+<div>
+<span class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest uppercase block font-semibold">Active Coordinates</span>
+<strong class="text-xs font-mono font-bold tracking-wide" id="ag-coordinates">...</strong>
+</div>
+<div class="text-right">
+<span class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest uppercase block font-semibold">Location Region</span>
+<span class="text-xs font-semibold" id="ag-region">...</span>
+</div>
+</div>
+<!-- Agronomic 4-Grid Metrics -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+<!-- Temp -->
+<div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
+<i class="ti ti-temperature-celsius text-lg text-[#E8724C] mb-1"></i>
+<span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Air Temp</span>
+<span class="text-sm font-bold font-mono text-[#E8724C]" id="ag-temp">...</span>
+</div>
+<!-- RH -->
+<div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
+<i class="ti ti-droplet text-lg text-sky-500 mb-1"></i>
+<span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Humidity</span>
+<span class="text-sm font-bold font-mono text-sky-500" id="ag-humidity">...</span>
+</div>
+<!-- Soil Moisture -->
+<div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
+<i class="ti ti-seeding text-lg text-[#5FB84C] mb-1"></i>
+<span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Soil moisture</span>
+<span class="text-sm font-bold font-mono text-[#5FB84C]" id="ag-soil">...</span>
+</div>
+<!-- ET -->
+<div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-3 text-center transition-all hover:border-irisBlue">
+<i class="ti ti-wind text-lg text-premiumGold mb-1"></i>
+<span class="block text-[10px] text-[#7E7C77] dark:text-[#9A9893] font-semibold">Evapotrans.</span>
+<span class="text-sm font-bold font-mono text-premiumGold" id="ag-et">...</span>
+</div>
+</div>
+<!-- Weather Status Description Banner -->
+<div class="border border-dashed border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl p-4 flex gap-3 items-center bg-[#FAF9F5]/30 dark:bg-[#1A1918]/30">
+<div class="w-10 h-10 rounded-full bg-irisBlue/10 flex items-center justify-center text-irisBlue">
+<i class="ti ti-info-circle text-lg"></i>
+</div>
+<div>
+<strong class="text-xs block font-bold" id="weather-alert-title">Agronomic Risk Profile</strong>
+<p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893]" id="weather-alert-desc">Select an account in the left cockpit to pull real-time weather alerts.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Column 3: CRM Action & Outreach Center (3 Columns) -->
+<section class="lg:col-span-3 flex flex-col gap-6">
+<!-- Outbound Advisory Box -->
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow">
+<h2 class="font-serif text-lg font-semibold tracking-wide mb-2 flex items-center gap-1.5">
+<i class="ti ti-send-2 text-irisBlue"></i> CRM Dispatch
         </h2>
-        <p class="text-xs text-[#7E7C77] dark:text-[#9A9893] mb-4">Auto-compiles physical agronomics against CBOT live price curves</p>
-
-        <div class="relative mb-3">
-          <label class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest font-semibold block uppercase mb-1">Outbound Target</label>
-          <div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg px-3 py-1.5 flex items-center gap-2 text-xs">
-            <i class="ti ti-user-circle text-base text-irisBlue"></i>
-            <span class="font-semibold" id="outbound-farmer-name">...</span>
-          </div>
-        </div>
-
-        <div class="relative mb-4">
-          <label class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest font-semibold block uppercase mb-1">Email / SMS Advisory Template</label>
-          <textarea id="outreach-template" rows="7" class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-3 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-irisBlue leading-relaxed resize-none"></textarea>
-        </div>
-
-        <div class="flex gap-2">
-          <button onclick="dispatchProposal()" class="flex-1 bg-irisBlue hover:bg-irisBlueDeep text-white py-2.5 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all custom-shadow">
-            <i class="ti ti-mail-forward text-sm"></i> Dispatch Alert
+<p class="text-xs text-[#7E7C77] dark:text-[#9A9893] mb-4">Auto-compiles physical agronomics against CBOT live price curves</p>
+<div class="relative mb-3">
+<label class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest font-semibold block uppercase mb-1">Outbound Target</label>
+<div class="bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg px-3 py-1.5 flex items-center gap-2 text-xs">
+<i class="ti ti-user-circle text-base text-irisBlue"></i>
+<span class="font-semibold" id="outbound-farmer-name">...</span>
+</div>
+</div>
+<div class="relative mb-4">
+<label class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] tracking-widest font-semibold block uppercase mb-1">Email / SMS Advisory Template</label>
+<textarea class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg p-3 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-irisBlue leading-relaxed resize-none" id="outreach-template" rows="7"></textarea>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-irisBlue hover:bg-irisBlueDeep text-white py-2.5 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all custom-shadow" onclick="dispatchProposal()">
+<i class="ti ti-mail-forward text-sm"></i> Dispatch Alert
           </button>
-          <button onclick="copyAdvisory()" class="bg-[#FAF9F5] dark:bg-[#111110] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] text-[#2B2A28] dark:text-[#E2E1DF] border border-[#E5E3DF] dark:border-[#2C2B29] p-2.5 rounded-lg flex items-center justify-center transition-all" title="Copy Text">
-            <i class="ti ti-copy text-base"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Live Advisory Log Note Card -->
-      <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
-        <h2 class="font-serif text-lg font-semibold tracking-wide mb-2 flex items-center gap-1.5">
-          <i class="ti ti-history text-irisBlue"></i> Action Logs
+<button class="bg-[#FAF9F5] dark:bg-[#111110] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] text-[#2B2A28] dark:text-[#E2E1DF] border border-[#E5E3DF] dark:border-[#2C2B29] p-2.5 rounded-lg flex items-center justify-center transition-all" onclick="copyAdvisory()" title="Copy Text">
+<i class="ti ti-copy text-base"></i>
+</button>
+</div>
+</div>
+<!-- Live Advisory Log Note Card -->
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-5 custom-shadow flex-1">
+<h2 class="font-serif text-lg font-semibold tracking-wide mb-2 flex items-center gap-1.5">
+<i class="ti ti-history text-irisBlue"></i> Action Logs
         </h2>
-        <p class="text-xs text-[#7E7C77] dark:text-[#9A9893] mb-4">Keep audit notes of conversations & market execution logs</p>
-
-        <!-- Log notes output list -->
-        <div id="log-notes-list" class="space-y-2 mb-4 max-h-[160px] overflow-y-auto">
-          <!-- Injected dynamically per user -->
-        </div>
-
-        <div class="flex gap-1.5">
-          <input type="text" id="new-log-input" placeholder="Type interaction log..." class="flex-1 bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-irisBlue transition-all">
-          <button onclick="saveLog()" class="bg-[#FAF9F5] dark:bg-[#111110] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] border border-[#E5E3DF] dark:border-[#2C2B29] px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center text-irisBlue transition-all">
-            <i class="ti ti-plus"></i>
-          </button>
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-  <!-- Interactive Global Toast system -->
-  <div id="toast-notif" class="fixed bottom-6 left-6 bg-white dark:bg-[#1A1918] border border-emerald-500 rounded-xl p-4 shadow-2xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 z-50">
-    <div class="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-      <i class="ti ti-checks text-lg"></i>
-    </div>
-    <div>
-      <strong class="text-xs block font-bold text-[#2B2A28] dark:text-[#E2E1DF]">Action Dispatched</strong>
-      <p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893]" id="toast-message">Client notified via automated SMS gateways successfully.</p>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="border-t border-[#E5E3DF] dark:border-[#2C2B29] bg-[#FAF9F5] dark:bg-[#111110] py-6 text-center text-xs text-[#7E7C77] dark:text-[#9A9893]">
-    <div class="max-w-[1600px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-      <p>&copy; 2026 AcreLink Inc. All proprietary agronomic indexes, CBOT & Euronext adapters are strictly secure.</p>
-      <div class="flex gap-4">
-        <a href="#" class="hover:text-irisBlue transition-colors">API Docs</a>
-        <a href="#" class="hover:text-irisBlue transition-colors">Broker Compliance</a>
-        <a href="#" class="hover:text-irisBlue transition-colors">Support Portal</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- App Main Business Logic & Interactivity scripts -->
-  <script>
+<p class="text-xs text-[#7E7C77] dark:text-[#9A9893] mb-4">Keep audit notes of conversations &amp; market execution logs</p>
+<!-- Log notes output list -->
+<div class="space-y-2 mb-4 max-h-[160px] overflow-y-auto" id="log-notes-list">
+<!-- Injected dynamically per user -->
+</div>
+<div class="flex gap-1.5">
+<input class="flex-1 bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-irisBlue transition-all" id="new-log-input" placeholder="Type interaction log..." type="text"/>
+<button class="bg-[#FAF9F5] dark:bg-[#111110] hover:bg-[#F2EFF9] dark:hover:bg-[#252422] border border-[#E5E3DF] dark:border-[#2C2B29] px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center text-irisBlue transition-all" onclick="saveLog()">
+<i class="ti ti-plus"></i>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Interactive Global Toast system -->
+<div class="fixed bottom-6 left-6 bg-white dark:bg-[#1A1918] border border-emerald-500 rounded-xl p-4 shadow-2xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 z-50" id="toast-notif">
+<div class="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+<i class="ti ti-checks text-lg"></i>
+</div>
+<div>
+<strong class="text-xs block font-bold text-[#2B2A28] dark:text-[#E2E1DF]">Action Dispatched</strong>
+<p class="text-[11px] text-[#7E7C77] dark:text-[#9A9893]" id="toast-message">Client notified via automated SMS gateways successfully.</p>
+</div>
+</div>
+<!-- Footer -->
+<footer class="border-t border-[#E5E3DF] dark:border-[#2C2B29] bg-[#FAF9F5] dark:bg-[#111110] py-6 text-center text-xs text-[#7E7C77] dark:text-[#9A9893]">
+<div class="max-w-[1600px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+<p>© 2026 AcreLink Inc. All proprietary agronomic indexes, CBOT &amp; Euronext adapters are strictly secure.</p>
+<div class="flex gap-4">
+<a class="hover:text-irisBlue transition-colors" href="#">API Docs</a>
+<a class="hover:text-irisBlue transition-colors" href="#">Broker Compliance</a>
+<a class="hover:text-irisBlue transition-colors" href="#">Support Portal</a>
+</div>
+</div>
+</footer>
+<!-- App Main Business Logic & Interactivity scripts -->
+<script>
     // In-memory client database
     const clients = [
       {
@@ -1627,96 +1596,87 @@ Core Instruction:
       }, 15000);
     };
   </script>
-
-  <!-- Floating Chatbot Toggle Button -->
-  <button id="chatbot-toggle" onclick="toggleChatbot()" class="fixed bottom-6 right-6 w-14 h-14 bg-irisBlue hover:bg-irisBlueDeep text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform hover:scale-105 z-50">
-    <i class="ti ti-messages text-2xl" id="chatbot-toggle-icon"></i>
-  </button>
-
-  <!-- Chatbot Panel -->
-  <div id="chatbot-panel" class="fixed bottom-24 right-6 w-[380px] h-[550px] max-h-[80vh] flex flex-col bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl shadow-2xl overflow-hidden z-50 transition-all duration-300 transform scale-0 origin-bottom-right opacity-0">
-    <!-- Header -->
-    <div class="px-4 py-3 bg-[#FAF9F5] dark:bg-[#111110] border-b border-[#E5E3DF] dark:border-[#2C2B29] flex justify-between items-center">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-irisBlue flex items-center justify-center text-white relative">
-          <i class="ti ti-robot text-base"></i>
-          <div class="absolute bottom-0 right-0 w-2 h-2 bg-green-500 border border-white dark:border-[#1A1918] rounded-full"></div>
-        </div>
-        <div>
-          <h3 class="font-serif font-semibold text-sm leading-tight text-[#2B2A28] dark:text-[#E2E1DF]">AcreLink Copilot</h3>
-          <p class="text-[9px] text-green-500 font-medium">Online • Live Intelligence</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-1">
-        <!-- Settings -->
-        <button onclick="openChatbotSettings()" class="w-7 h-7 flex items-center justify-center rounded-lg text-[#7E7C77] dark:text-[#9A9893] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="AI Settings">
-          <i class="ti ti-settings text-base"></i>
-        </button>
-        <!-- Clear History -->
-        <button onclick="clearChatbotHistory()" class="w-7 h-7 flex items-center justify-center rounded-lg text-[#7E7C77] dark:text-[#9A9893] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="Clear Chat">
-          <i class="ti ti-trash text-base"></i>
-        </button>
-        <!-- Minimize -->
-        <button onclick="toggleChatbot()" class="w-7 h-7 flex items-center justify-center rounded-lg text-[#7E7C77] dark:text-[#9A9893] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="Minimize">
-          <i class="ti ti-minus text-base"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- Messages Container -->
-    <div id="chatbot-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-[#1C1B1A]">
-      <!-- Populated by JS -->
-    </div>
-
-    <!-- Input Area -->
-    <div class="p-3 bg-[#FAF9F5] dark:bg-[#111110] border-t border-[#E5E3DF] dark:border-[#2C2B29] flex items-center gap-2">
-      <input type="text" id="chatbot-input" onkeydown="handleChatbotKey(event)" placeholder="Ask AcreLink AI..." class="flex-1 bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#2B2A28] dark:text-[#E2E1DF] placeholder-[#7E7C77] dark:placeholder-[#9A9893] focus:outline-none focus:ring-1 focus:ring-irisBlue focus:border-irisBlue transition-all">
-      <button onclick="sendChatbotMessage()" class="w-8 h-8 rounded-xl bg-irisBlue hover:bg-irisBlueDeep text-white flex items-center justify-center transition-all shadow-md">
-        <i class="ti ti-send text-sm"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- AI Settings Modal -->
-  <div id="chatbot-settings-modal" class="fixed inset-0 bg-[#2B2A28]/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center hidden z-[100] transition-all duration-200">
-    <div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-6 w-[400px] max-w-[90%] shadow-2xl">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="font-serif font-semibold text-base flex items-center gap-2 text-[#2B2A28] dark:text-[#E2E1DF]">
-          <i class="ti ti-settings-automation text-irisBlue"></i> AI Agent Settings
+<!-- Floating Chatbot Toggle Button -->
+<button class="fixed bottom-6 right-6 w-14 h-14 bg-irisBlue hover:bg-irisBlueDeep text-white rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 transform hover:scale-105 z-50" id="chatbot-toggle" onclick="toggleChatbot()" style="display: none !important;">
+<i class="ti ti-messages text-2xl" id="chatbot-toggle-icon"></i>
+</button>
+<!-- Chatbot Panel -->
+<div class="fixed bottom-24 right-6 w-[380px] h-[550px] max-h-[80vh] flex flex-col bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl shadow-2xl overflow-hidden z-50 transition-all duration-300 transform scale-0 origin-bottom-right opacity-0" id="chatbot-panel" style="display: none !important;">
+<!-- Header -->
+<div class="px-4 py-3 bg-[#FAF9F5] dark:bg-[#111110] border-b border-[#E5E3DF] dark:border-[#2C2B29] flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-irisBlue flex items-center justify-center text-white relative">
+<i class="ti ti-robot text-base"></i>
+<div class="absolute bottom-0 right-0 w-2 h-2 bg-green-500 border border-white dark:border-[#1A1918] rounded-full"></div>
+</div>
+<div>
+<h3 class="font-serif font-semibold text-sm leading-tight text-[#2B2A28] dark:text-[#E2E1DF]">AcreLink Copilot</h3>
+<p class="text-[9px] text-green-500 font-medium">Online • Live Intelligence</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<!-- Settings -->
+<button class="w-7 h-7 flex items-center justify-center rounded-lg text-[#7E7C77] dark:text-[#9A9893] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" onclick="openChatbotSettings()" title="AI Settings">
+<i class="ti ti-settings text-base"></i>
+</button>
+<!-- Clear History -->
+<button class="w-7 h-7 flex items-center justify-center rounded-lg text-[#7E7C77] dark:text-[#9A9893] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" onclick="clearChatbotHistory()" title="Clear Chat">
+<i class="ti ti-trash text-base"></i>
+</button>
+<!-- Minimize -->
+<button class="w-7 h-7 flex items-center justify-center rounded-lg text-[#7E7C77] dark:text-[#9A9893] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" onclick="toggleChatbot()" title="Minimize">
+<i class="ti ti-minus text-base"></i>
+</button>
+</div>
+</div>
+<!-- Messages Container -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-[#1C1B1A]" id="chatbot-messages">
+<!-- Populated by JS -->
+</div>
+<!-- Input Area -->
+<div class="p-3 bg-[#FAF9F5] dark:bg-[#111110] border-t border-[#E5E3DF] dark:border-[#2C2B29] flex items-center gap-2">
+<input class="flex-1 bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#2B2A28] dark:text-[#E2E1DF] placeholder-[#7E7C77] dark:placeholder-[#9A9893] focus:outline-none focus:ring-1 focus:ring-irisBlue focus:border-irisBlue transition-all" id="chatbot-input" onkeydown="handleChatbotKey(event)" placeholder="Ask AcreLink AI..." type="text"/>
+<button class="w-8 h-8 rounded-xl bg-irisBlue hover:bg-irisBlueDeep text-white flex items-center justify-center transition-all shadow-md" onclick="sendChatbotMessage()">
+<i class="ti ti-send text-sm"></i>
+</button>
+</div>
+</div>
+<!-- AI Settings Modal -->
+<div class="fixed inset-0 bg-[#2B2A28]/40 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center hidden z-[100] transition-all duration-200" id="chatbot-settings-modal">
+<div class="bg-white dark:bg-[#1A1918] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-2xl p-6 w-[400px] max-w-[90%] shadow-2xl">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-serif font-semibold text-base flex items-center gap-2 text-[#2B2A28] dark:text-[#E2E1DF]">
+<i class="ti ti-settings-automation text-irisBlue"></i> AI Agent Settings
         </h3>
-        <button onclick="closeChatbotSettings()" class="text-[#7E7C77] dark:text-[#9A9893] hover:text-[#2B2A28] dark:hover:text-[#E2E1DF]">
-          <i class="ti ti-x text-lg"></i>
-        </button>
-      </div>
-      
-      <div class="space-y-4">
-        <div>
-          <label class="block text-[10px] font-semibold text-[#7E7C77] dark:text-[#9A9893] uppercase mb-1">AI Mode</label>
-          <select id="chatbot-provider-select" onchange="toggleSettingsProviderFields()" class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#2B2A28] dark:text-[#E2E1DF] focus:outline-none focus:ring-1 focus:ring-irisBlue">
-            <option value="local">Built-in Local Copilot (Free, Smart, Interacts Live)</option>
-            <option value="openai">OpenAI (GPT-4o-mini)</option>
-            <option value="gemini">Google Gemini (Gemini 1.5 Flash)</option>
-          </select>
-          <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] mt-1.5 leading-normal">Our Built-in Local Copilot is highly domain-expert and has direct dashboard interactivity. Switch to a custom LLM provider if you want unconstrained general conversations.</p>
-        </div>
-        
-        <div id="chatbot-api-key-container" class="hidden">
-          <label class="block text-[10px] font-semibold text-[#7E7C77] dark:text-[#9A9893] uppercase mb-1">API Key</label>
-          <input type="password" id="chatbot-api-key" placeholder="Paste your API key here..." class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#2B2A28] dark:text-[#E2E1DF] focus:outline-none focus:ring-1 focus:ring-irisBlue">
-          <p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] mt-1">Stored securely in your local browser storage. Never transmitted to our servers.</p>
-        </div>
-      </div>
-      
-      <div class="flex gap-2 mt-6">
-        <button onclick="closeChatbotSettings()" class="flex-1 py-2 px-3 border border-[#E5E3DF] dark:border-[#2C2B29] text-[#2B2A28] dark:text-[#E2E1DF] text-xs font-medium rounded-xl hover:bg-[#FAF9F5] dark:hover:bg-[#111110] transition-all">
+<button class="text-[#7E7C77] dark:text-[#9A9893] hover:text-[#2B2A28] dark:hover:text-[#E2E1DF]" onclick="closeChatbotSettings()">
+<i class="ti ti-x text-lg"></i>
+</button>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block text-[10px] font-semibold text-[#7E7C77] dark:text-[#9A9893] uppercase mb-1">AI Mode</label>
+<select class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#2B2A28] dark:text-[#E2E1DF] focus:outline-none focus:ring-1 focus:ring-irisBlue" id="chatbot-provider-select" onchange="toggleSettingsProviderFields()">
+<option value="local">Built-in Local Copilot (Free, Smart, Interacts Live)</option>
+<option value="openai">OpenAI (GPT-4o-mini)</option>
+<option value="gemini">Google Gemini (Gemini 1.5 Flash)</option>
+</select>
+<p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] mt-1.5 leading-normal">Our Built-in Local Copilot is highly domain-expert and has direct dashboard interactivity. Switch to a custom LLM provider if you want unconstrained general conversations.</p>
+</div>
+<div class="hidden" id="chatbot-api-key-container">
+<label class="block text-[10px] font-semibold text-[#7E7C77] dark:text-[#9A9893] uppercase mb-1">API Key</label>
+<input class="w-full bg-[#FAF9F5] dark:bg-[#111110] border border-[#E5E3DF] dark:border-[#2C2B29] rounded-xl px-3 py-2 text-xs text-[#2B2A28] dark:text-[#E2E1DF] focus:outline-none focus:ring-1 focus:ring-irisBlue" id="chatbot-api-key" placeholder="Paste your API key here..." type="password"/>
+<p class="text-[10px] text-[#7E7C77] dark:text-[#9A9893] mt-1">Stored securely in your local browser storage. Never transmitted to our servers.</p>
+</div>
+</div>
+<div class="flex gap-2 mt-6">
+<button class="flex-1 py-2 px-3 border border-[#E5E3DF] dark:border-[#2C2B29] text-[#2B2A28] dark:text-[#E2E1DF] text-xs font-medium rounded-xl hover:bg-[#FAF9F5] dark:hover:bg-[#111110] transition-all" onclick="closeChatbotSettings()">
           Cancel
         </button>
-        <button onclick="saveChatbotSettings()" class="flex-1 py-2 px-3 bg-irisBlue hover:bg-irisBlueDeep text-white text-xs font-medium rounded-xl transition-all shadow-md">
+<button class="flex-1 py-2 px-3 bg-irisBlue hover:bg-irisBlueDeep text-white text-xs font-medium rounded-xl transition-all shadow-md" onclick="saveChatbotSettings()">
           Save Settings
         </button>
-      </div>
-    </div>
-  </div>
-
+</div>
+</div>
+</div>
 </body>
 </html>
